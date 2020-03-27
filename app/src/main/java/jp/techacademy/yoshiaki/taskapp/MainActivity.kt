@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
+
+
+
         fab.setOnClickListener { view ->
             val intent = Intent(this@MainActivity, InputActivity::class.java)
             startActivity(intent)
@@ -59,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("削除")
             builder.setMessage(task.title + "を削除しますか")
 
-            builder.setPositiveButton("OK"){_, _ ->
+            builder.setPositiveButton("OK") { _, _ ->
                 val results = mRealm.where(Task::class.java).equalTo("id", task.id).findAll()
 
                 mRealm.beginTransaction()
@@ -80,6 +85,13 @@ class MainActivity : AppCompatActivity() {
                 reloadListView()
             }
 
+
+
+
+
+
+
+
             builder.setNegativeButton("CANCEL", null)
 
             val dialog = builder.create()
@@ -88,18 +100,38 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        //絞り込みを押下時 追加コード
+        button_filter.setOnClickListener() {
+
+
+            val findcategory = category_edit_text.text.toString()
+            val taskRealmResults =
+                mRealm.where(Task::class.java).equalTo("category", findcategory).findAll()
+            mTaskAdapter.taskList = mRealm.copyFromRealm(taskRealmResults)
+            // TaskのListView用のアダプタに渡す
+            listView1.adapter = mTaskAdapter
+
+            // 表示を更新するために、アダプターにデータが変更されたことを知らせる
+            mTaskAdapter.notifyDataSetChanged()
+
+        }
+
+
+
         reloadListView()
     }
 
     private fun reloadListView() {
         // Realmデータベースから、「全てのデータを取得して新しい日時順に並べた結果」を取得
-        val taskRealmResults = mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
+        val taskRealmResults =
+            mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
 
         // 上記の結果を、TaskList としてセットする
         mTaskAdapter.taskList = mRealm.copyFromRealm(taskRealmResults)
 
         // TaskのListView用のアダプタに渡す
         listView1.adapter = mTaskAdapter
+        category_edit_text
 
         // 表示を更新するために、アダプターにデータが変更されたことを知らせる
         mTaskAdapter.notifyDataSetChanged()

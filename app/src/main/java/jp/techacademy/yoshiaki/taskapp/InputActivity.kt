@@ -124,12 +124,14 @@ class InputActivity : AppCompatActivity() {
 
         val title = title_edit_text.text.toString()
         val content = content_edit_text.text.toString()
+        val category=category_edit_text.text.toString()
 
         mTask!!.title = title
         mTask!!.contents = content
         val calendar = GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute)
         val date = calendar.time
         mTask!!.date = date
+        mTask!!.category=category
 
         realm.copyToRealmOrUpdate(mTask!!)
         realm.commitTransaction()

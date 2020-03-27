@@ -49,4 +49,14 @@
         android:layout_alignParentRight="true"
         android:text="決定" />
 
+    <EditText
+        android:id="@+id/category_edit_text"
+        android:layout_width="294dp"
+        android:layout_height="64dp"
+        android:layout_alignBottom="@+id/date_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|center"
+        android:hint="カテゴリ" />
+
 </RelativeLayout>
